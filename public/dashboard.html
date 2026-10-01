@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Never Miss</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="dash-wrap">
+  <div class="top-bar">
+    <div class="logo">Never Miss</div>
+    <button class="secondary" id="logout-btn">Log out</button>
+  </div>
+  <h1 id="biz-name">—</h1>
+  <p class="sub">Your booking link — put this on your website or Google Business profile:</p>
+  <div class="widget-link-box" id="widget-link">—</div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="l">Total bookings</div><div class="v" id="stat-total">0</div></div>
+    <div class="stat"><div class="l">After-hours (would've hit voicemail)</div><div class="v a" id="stat-after">0</div></div>
+  </div>
+
+  <h2>Bookings</h2>
+  <table id="bookings-table">
+    <thead>
+      <tr><th>When</th><th>Customer</th><th>Service</th><th>Contact</th><th></th></tr>
+    </thead>
+    <tbody id="bookings-body"></tbody>
+  </table>
+  <p id="empty-state" class="sub hidden">No bookings yet — share your link above to start catching them.</p>
+</div>
+<script src="/dashboard.js"></script>
+</body>
+</html>

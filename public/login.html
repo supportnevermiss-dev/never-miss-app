@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Log in — Never Miss</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="auth-wrap">
+  <h1>Log in</h1>
+  <p class="sub">See what came in overnight.</p>
+  <form id="login-form">
+    <label>Email
+      <input type="email" id="ownerEmail" required>
+    </label>
+    <label>Password
+      <input type="password" id="password" required>
+    </label>
+    <div id="error" class="error hidden"></div>
+    <button type="submit">Log in</button>
+  </form>
+</div>
+<script>
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const ownerEmail = document.getElementById('ownerEmail').value;
+  const password = document.getElementById('password').value;
+  const errorEl = document.getElementById('error');
+  errorEl.classList.add('hidden');
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ownerEmail, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed');
+    localStorage.setItem('nm_token', data.token);
+    localStorage.setItem('nm_slug', data.slug);
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.classList.remove('hidden');
+  }
+});
+</script>
+</body>
+</html>

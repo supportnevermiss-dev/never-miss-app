@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Create your Never Miss account</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="auth-wrap">
+  <h1>Set up your business</h1>
+  <p class="sub">Takes a minute. You'll get a booking link to put on your website or Google profile.</p>
+  <form id="signup-form">
+    <label>Business name
+      <input type="text" id="businessName" required>
+    </label>
+    <label>Your email
+      <input type="email" id="ownerEmail" required>
+    </label>
+    <label>Password
+      <input type="password" id="password" required minlength="6">
+    </label>
+    <div id="error" class="error hidden"></div>
+    <button type="submit">Create account</button>
+  </form>
+</div>
+<script>
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const businessName = document.getElementById('businessName').value;
+  const ownerEmail = document.getElementById('ownerEmail').value;
+  const password = document.getElementById('password').value;
+  const errorEl = document.getElementById('error');
+  errorEl.classList.add('hidden');
+  try {
+    const res = await fetch('/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ businessName, ownerEmail, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Signup failed');
+    localStorage.setItem('nm_token', data.token);
+    localStorage.setItem('nm_slug', data.slug);
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.classList.remove('hidden');
+  }
+});
+</script>
+</body>
+</html>

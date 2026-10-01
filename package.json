@@ -1,0 +1,12 @@
+{
+  "name": "never-miss-app",
+  "version": "1.0.0",
+  "description": "Never Miss - after-hours booking widget for trade businesses",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}
