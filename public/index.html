@@ -2,17 +2,167 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Never Miss — booking that works after hours</title>
-<link rel="stylesheet" href="/styles.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Never Miss</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  :root { --bg:#FFFFFF; --panel:#F7F8FA; --ink:#1A1D21; --accent:#2557D6; --accent-soft:#E8EEFC; --grey:#5B6169; --line:#E3E5E9; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: Inter, system-ui, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 700px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 22px 0; border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-weight: 700; font-size: 16.5px; }
+  nav a { font-size: 13.5px; text-decoration: none; font-weight: 600; padding: 9px 16px; background: var(--accent); color: #fff; border-radius: 6px; }
+  .hero { padding: 56px 0 0; text-align: center; }
+  .kicker { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
+  h1 { font-size: 34px; font-weight: 800; line-height: 1.25; letter-spacing: -0.015em; margin: 0 auto 16px; max-width: 480px; }
+  .hero p.sub { font-size: 15.5px; color: var(--grey); max-width: 440px; margin: 0 auto 26px; }
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: center; margin-bottom: 44px; }
+  .btn-primary { background: var(--accent); color: #fff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; display: inline-block; }
+  .btn-note { font-size: 12.5px; color: var(--grey); }
+  .browser { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(20,25,35,0.06); margin-bottom: 8px; }
+  .browser .bar { background: #F1F2F4; padding: 9px 12px; display: flex; gap: 6px; border-bottom: 1px solid var(--line); }
+  .browser .dot { width: 9px; height: 9px; border-radius: 50%; background: #D7D9DD; }
+  .browser .content { background: #fff; padding: 20px; text-align: left; }
+  .stat-row { display: flex; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+  .stat .l { font-size: 11px; color: var(--grey); margin-bottom: 3px; }
+  .stat .v { font-size: 20px; font-weight: 700; }
+  .stat .v.a { color: var(--accent); }
+  table.demo { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.demo th { text-align: left; color: var(--grey); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 11px; }
+  table.demo td { padding: 6px 8px; border-bottom: 1px solid #F0F1F3; }
+  table.demo tr:last-child td { border-bottom: none; }
+  .tag-after { color: var(--accent); font-weight: 600; }
+  section { padding: 52px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 21px; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.01em; }
+  .plain-list { list-style: none; }
+  .plain-list li { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; color: var(--ink); }
+  .plain-list li:last-child { border-bottom: none; }
+  .plain-list li .mark { color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .steps { counter-reset: step; }
+  .step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .step:last-child { border-bottom: none; }
+  .step .num { font-weight: 700; color: var(--accent); font-size: 14px; width: 20px; flex-shrink: 0; }
+  .step h3 { font-size: 14.5px; font-weight: 600; margin-bottom: 3px; }
+  .step p { font-size: 13.5px; color: var(--grey); }
+  .price-box { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 26px; max-width: 320px; }
+  .price-box .amt { font-size: 32px; font-weight: 800; }
+  .price-box .amt span { font-size: 14px; font-weight: 400; color: var(--grey); }
+  .price-box ul { list-style: none; margin: 16px 0 20px; }
+  .price-box li { font-size: 13.5px; color: var(--ink); padding: 6px 0; }
+  .price-box li::before { content: "— "; color: var(--grey); }
+  .faq-item { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item h3 { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; }
+  .faq-item p { font-size: 13.5px; color: var(--grey); }
+  .founder-note { background: var(--panel); border-radius: 10px; padding: 22px 24px; font-size: 13.5px; color: var(--ink); }
+  .founder-note b { display: block; margin-bottom: 6px; font-size: 13px; color: var(--grey); font-weight: 600; }
+  .final-cta { text-align: center; padding: 60px 0; }
+  footer { padding: 26px 0; border-top: 1px solid var(--line); font-size: 12px; color: var(--grey); text-align: center; }
+  @media (max-width: 560px) { h1 { font-size: 27px; } .stat-row { gap: 14px; } }
+</style>
 </head>
 <body>
-<div class="auth-wrap">
-  <h1>Never Miss</h1>
-  <p class="sub">The app behind your booking widget. Sign up your business to get your own booking link, or log in to see what came in overnight.</p>
-  <a href="/signup.html"><button>Create your business account</button></a>
-  <a href="/login.html"><button class="secondary" style="margin-top:10px;">Log in</button></a>
-  <p class="powered">This is the product dashboard. Looking for the marketing page? That's a separate link.</p>
+
+<header>
+  <div class="wrap">
+    <div class="logo">Never Miss</div>
+    <nav><a href="/signup.html">Get started</a></nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="kicker">For tradespeople and service businesses</div>
+    <h1>A booking widget for the calls you're missing after hours</h1>
+    <p class="sub">Customers book you online, anytime — no phone tag, no voicemail. You see exactly how much of it happened after hours.</p>
+    <div class="cta-row">
+      <a class="btn-primary" href="/signup.html">Create your free account</a>
+      <span class="btn-note">Takes about a minute — no setup fee during early access</span>
+    </div>
+    <div class="browser">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="content">
+        <div class="stat-row">
+          <div class="stat"><div class="l">Booked revenue, 90 days</div><div class="v">$14,280</div></div>
+          <div class="stat"><div class="l">Would've hit voicemail</div><div class="v a">$4,860</div></div>
+        </div>
+        <table class="demo">
+          <tr><th>Date</th><th>Time</th><th>Service</th><th>Value</th><th></th></tr>
+          <tr><td>Sep 24</td><td>9:41 PM</td><td>Emergency repair</td><td>$420</td><td class="tag-after">after-hours</td></tr>
+          <tr><td>Sep 25</td><td>11:00 AM</td><td>Standard call</td><td>$180</td><td></td></tr>
+          <tr><td>Sep 25</td><td>6:15 AM</td><td>Emergency repair</td><td>$390</td><td class="tag-after">after-hours</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
+
+<section>
+  <div class="wrap">
+    <h2>What it actually fixes</h2>
+    <ul class="plain-list">
+      <li><span class="mark">—</span><span>About a third of service calls come in outside business hours, when nobody's there to pick up.</span></li>
+      <li><span class="mark">—</span><span>Most callers who hit voicemail just call the next business instead of waiting for a callback.</span></li>
+      <li><span class="mark">—</span><span>The widget takes the booking in under 10 seconds, day or night, no ringing.</span></li>
+      <li><span class="mark">—</span><span>Share one link on your site or Google Business profile — nothing to rebuild.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div><h3>Create your account</h3><p>Takes about a minute — you'll get your own booking link right away.</p></div></div>
+      <div class="step"><div class="num">2</div><div><h3>Customers book anytime</h3><p>Share your link on your site or Google Business page. They pick a service and a time — no calling required.</p></div></div>
+      <div class="step"><div class="num">3</div><div><h3>See what it caught</h3><p>Your dashboard shows every booking, with after-hours ones flagged so you know exactly what the phone line would've missed.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Pricing</h2>
+    <div class="price-box">
+      <div class="amt">$149<span>/month</span></div>
+      <ul>
+        <li>Unlimited bookings</li>
+        <li>Your own booking link — share anywhere</li>
+        <li>After-hours tracking dashboard</li>
+        <li>No setup fee during early access</li>
+      </ul>
+      <a class="btn-primary" style="display:block;text-align:center;" href="/signup.html">Create your free account</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Common questions</h2>
+    <div class="faq-item"><h3>Do I need a developer to install it?</h3><p>No. You get a simple link to share — paste it into your website, Google Business profile, or wherever customers find you.</p></div>
+    <div class="faq-item"><h3>Does it work with my existing scheduling tools?</h3><p>It works standalone out of the box. Calendar sync with common tools is being added during early access.</p></div>
+    <div class="faq-item"><h3>What if I'm already on a call and someone books?</h3><p>You get the booking either way — it doesn't compete with your phone, it just catches what the phone misses.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="founder-note">
+      <b>Why I'm building this</b>
+      Talked to a handful of trade business owners who all said some version of the same thing — they lose real jobs to voicemail and have no idea how much. This is meant to fix that without adding another complicated tool to learn.
+    </div>
+  </div>
+</section>
+
+<div class="final-cta wrap">
+  <h2 style="margin-bottom:10px;">Stop losing jobs after hours</h2>
+  <p style="color:var(--grey);font-size:14.5px;margin-bottom:22px;">Early access spots are limited while the first businesses get onboarded by hand.</p>
+  <a class="btn-primary" href="/signup.html">Create your free account</a>
+</div>
+
+<footer>Never Miss — booking widget for trades and service businesses. <a href="/login.html" style="color:inherit;">Log in</a></footer>
+
 </body>
 </html>
